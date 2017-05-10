@@ -80,7 +80,7 @@ void receiveEvent(int countToRead) {
 		writePWMg(OCR1B)
 	}
 	else {
-		while (Wire.available())
+		while (Wire.available())  
 			Wire.read();
 	}
 
