@@ -48,10 +48,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>d:\arduino\hardware\arduino\avr\libraries\Wire\src;d:\arduino\hardware\arduino\avr\libraries\Wire\src\utility;d:\arduino\libraries;d:\arduino\hardware\arduino\avr\libraries;$(ProjectDir)..\..\..\Documents\Arduino\libraries;d:\arduino\hardware\arduino\avr\cores\arduino;d:\arduino\hardware\arduino\avr\variants\eightanaloginputs;$(ProjectDir)..\i2c_slave;d:\arduino\hardware\tools\avr\avr\include\;d:\arduino\hardware\tools\avr\avr\include\avr\;d:\arduino\hardware\tools\avr\lib\gcc\avr\4.8.1\include;d:\arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;d:\arduino\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\arduino\hardware\arduino\avr\libraries\Wire\src;C:\arduino\hardware\arduino\avr\libraries\Wire\src\utility;C:\arduino\libraries;C:\arduino\hardware\arduino\avr\libraries;$(ProjectDir)..\..\..\Documents\Arduino\libraries;C:\arduino\hardware\arduino\avr\cores\arduino;C:\arduino\hardware\arduino\avr\variants\eightanaloginputs;$(ProjectDir)..\i2c_slave;C:\arduino\hardware\tools\avr\avr\include\;C:\arduino\hardware\tools\avr\avr\include\avr\;C:\arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;C:\arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;C:\arduino\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ProjectDir)__vm\.i2c_slave.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
-      <PreprocessorDefinitions>__AVR_ATmega328p__;__AVR_ATmega328P__;F_CPU=8000000L;ARDUINO=10802;ARDUINO_AVR_PRO;ARDUINO_ARCH_AVR;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__AVR_ATmega328p__;__AVR_ATmega328P__;F_CPU=8000000L;ARDUINO=106012;ARDUINO_AVR_PRO;ARDUINO_ARCH_AVR;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
