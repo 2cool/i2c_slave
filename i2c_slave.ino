@@ -3,7 +3,7 @@
 
 
 #define BEEP 13
-uint8_t beeps_coder[] = { B00001000,B00001100,B00001110,0,0,0,0,0,0,0,0,0,0,0,0};//4 beeps if 0 short 1 long beep
+uint8_t beeps_coder[] = {0, B00001000,B00001001,B00001010,B00001011,B00001100,B00001101,B00001110,B00001111,B00000001,B00000010,B00000011,B00000100,B00000101,B00000110,B00000111 };//4 beeps if 0 short 1 long beep
 int16_t readBuffer[6];
 float fb[3];
 void setup() {
@@ -66,9 +66,9 @@ int temp;
 enum COMMANDS_BIT { SOUND_ON = 1,BEEP_CODE=30 };
 
 
-volatile uint8_t beep_code;
+volatile uint8_t beep_code=0;
 volatile uint8_t cnt = 0;
-volatile bool beep_on=true;
+volatile bool beep_on=false;
 uint8_t old_cnt = 0;
 uint16_t err = 0;
 
@@ -88,7 +88,8 @@ void receiveEvent(int countToRead) {
 	else  if (av == 1) {
 		uint8_t command = Wire.read();
 		beep_on		= command&SOUND_ON;
-		beep_code	= (command&BEEP_CODE) << 1;
+		beep_code =  (command&BEEP_CODE) >> 1;
+		
 		
 	}
 	else
@@ -125,24 +126,25 @@ void stop_motors() {
 
 }
 bool beep_bit = false;
-uint8_t beep_cnt = 0;
+uint16_t beep_cnt = 0;
 uint16_t beep_code_cnt;
-uint8_t  beep_code_n;
+uint8_t  beep_code_n=0;
 bool beep_code_on = false;
 
 
 
 void beeps_code() {
+	
 	beep_code_cnt++;
 	if (beep_code_on == false) {
-		if (beep_code_cnt > 150) {
+		if (beep_code_cnt > 100) {
 			beep_code_cnt = 0;
 			beep_code_on = true;
 		}
 	}
 	else {
-		bool long_beep = (beeps_coder[beep_code] << beep_code_n) & 1;
-		if (beep_code_cnt > (long_beep) ? 600 : 300) {
+		bool long_beep = (beeps_coder[beep_code] >> beep_code_n) & 1;
+		if (beep_code_cnt > ((long_beep) ? 600 : 200)) {
 			beep_code_cnt = 0;
 			beep_code_n++;
 			beep_code_on = false;
@@ -160,16 +162,16 @@ void beeps_code() {
 }
 
 void beep() {
-	if (beep_code) {
+	if (beep_code>0) {
 		beeps_code();
 	}else
 		if (beep_on) {
-			uint8_t beep_cnd = 255;
+			uint16_t beep_cnd = 20000;
 			if (fb[2] > 300)
-				beep_cnd = (fb[2] < 900) ? 2 : 1;
+				beep_cnd = (fb[2] < 900) ? 0 : 1;
 			else
 				if (fb[0] > 300 || fb[1] > 300)
-					beep_cnd = 0;
+					beep_cnd = 2;
 
 			if (beep_cnd == beep_cnt) {
 				beep_cnt ^= beep_cnt;//=0
@@ -190,7 +192,8 @@ void update_voltage() {
 	beep();
 	delay(DELAY);
 }
-
+uint8_t err_beep_cnt = 0;
+bool err_beep_f = false;
 void loop() {
 	if (cnt != old_cnt) {
 		old_cnt = cnt;
@@ -199,8 +202,16 @@ void loop() {
 	}
 	else {
 		err++;
-		if (err > 300)
+		if (err > 300) {
 			stop_motors();
+			if ((err_beep_cnt++) > 20) {
+				err_beep_f ^= true;
+				err_beep_cnt ^= err_beep_cnt;
+			}
+			if (err_beep_f)
+				digitalWrite(BEEP, beep_bit ^= true);
+			
+		}
 	}
 	update_voltage();
 //	Serial.println(fb[2]);
